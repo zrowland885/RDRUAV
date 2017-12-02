@@ -1,0 +1,14 @@
+"D1@LocalLPattern1"=	"controlNumPassengerRows"
+"D3@LocalLPattern1"=	"fuselagePassengerSpacingLong_Length_mm" + "fuselageSeat_Diameter_mm"
+"Fuselage_Length@Boss-Extrude1@fuselage_mk3_changed-boom-holes-distance_in-right-folder<1>.Part" = "fuselage_Length_mm"	
+"fuselagePassengerSpacingLong_Length_mm"=	6.35
+"controlNumPassengerRows"=	13
+"fuselageSeat_Diameter_mm"=	49
+"fuselage_Length_mm"=	719.55
+"boomSeparation_Dist_mm"=	350
+"D4@Sketch1@fuselage_mk3_changed-boom-holes-distance_in-right-folder<1>.Part" = "boomSeparation_Dist_mm" / 2	
+"D3@Sketch1@fuselage_nose_v1.1<1>.Part" = "boomSeparation_Dist_mm" / 2	
+"fuselageSemiMajorAxis_Dist_mm"=	240
+"fuselageSemiMinorAxis_Dist_mm"=	100
+"Ellipse_Semi_Minor@Sketch1@fuselage_mk3_changed-boom-holes-distance_in-right-folder<1>.Part" = "fuselageSemiMinorAxis_Dist_mm"	
+"Ellipse_Semi_Major@Sketch1@fuselage_mk3_changed-boom-holes-distance_in-right-folder<1>.Part" = "fuselageSemiMajorAxis_Dist_mm"	
