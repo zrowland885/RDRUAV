@@ -1,0 +1,9 @@
+% Input iterations for input variables here in the
+% format "variable"=	initialVal:increment:finalVal
+% Use the noChangeIter variable to iterate without
+% changing any variables or dimensions.
+% "noChangeIter"=	0:0:0
+
+"controlNumPassengerRows"=	4:2:20
+"controlPayloadDensity_kgm-3"=	0:300:1500
+"wingRootChord_Length_mm"=	300:100:600
