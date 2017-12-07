@@ -7,7 +7,7 @@
 "controlMonteCarloIterations"=	1000	% Approx. 1250 iter./sec.
 "controlNumPassengerRows"=	13
 "controlPayloadDensity_kgm-3"=	190	% Max 1730 kgm-3
-"controlVelocity_ms-1"=	20
+"controlVelocity_ms-1"=	13
 
 % Wing dimensions
 "wingTaper_Ratio"=	0.9
@@ -26,9 +26,9 @@
 "fuselageS3_Ratio"=	0.6	% the passengers.
 "fuselageS4_Length_mm"=	200
 "fuselageS3YUpper_Chamfer_mm"=	15	% Should be <= 15 mm to avoid intersecting passenger bay
-"fuselageS3YLower_Chamfer_mm"=	15	
-"fuselageS4YUpper_Chamfer_mm"=	60	% Should be <= 115 mm to avoid inersecting boom
-"fuselageS4YLower_Chamfer_mm"=	60	% Should be <= 60 mm to avoid intersecting boom 
+"fuselageS3YLower_Chamfer_mm"=	5	
+"fuselageS4YUpper_Chamfer_mm"=	115	% Should be <= 115 mm to avoid inersecting boom
+"fuselageS4YLower_Chamfer_mm"=	15	% Should be <= 60 mm to avoid intersecting boom 
 
 % Spar and boom dimensions
 "wingMainSpar_InnerDiameter_mm"=	15

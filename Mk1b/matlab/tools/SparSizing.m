@@ -1,5 +1,5 @@
 %% Spar Sizing Using Symbolic Lift Equation
-function ro_spar_cyl_mm = SparSizing(lw,W,Ws,n,Co,Ct,Uts,t)
+function ro_spar_cyl_mm = sparsize(lw,W,Ws,n,Co,Ct,Uts,t)
 syms x
 % W = Total Aircraft Mass, kg
 % Ws = Wing Structural Mass, kg
@@ -14,7 +14,8 @@ Ws = Ws * 9.81; % Wing Structural Weight, N
 Co = Co /1000; % If Co is in mm
 Ct =  Ct/1000; % If Ct is in mm
 lw = lw/1000; % If lw is in mm
-s = 0.002*tan(30*pi/180); % Small distance 
+t = t/1000; % Thickness of spar in mm
+s = t*tan(30*pi/180); % Small distance for hexagonal spar calculation
 
 %% Lift Force Generated on the wing
 ql = (2*W*n)*sqrt((lw^2)-(x^2))/(pi*lw^2);
@@ -31,11 +32,13 @@ V =  int(-qt,x);
 
 %% Bending Moment Acting on the Spar
 M = int(V,x);
-C = (Co*Ws*lw*n)/(2*(Co + Ct)) - (lw^3*(Co*Ws*n - Ct*Ws*n))/(6*Co*lw^2 + 6*Ct*lw^2) + real((W*lw*n*log(lw*1i)*1i))/pi;
+C = (Co*Ws*lw*n)/(2*(Co + Ct)) - ...
+    (lw^3*(Co*Ws*n - Ct*Ws*n))/(6*Co*lw^2 + 6*Ct*lw^2) + ...
+    real((W*lw*n*log(lw*1i)*1i))/pi;
 M0 = M - C;
-fplot(M0,[0 lw]);
-xlabel('Distance from root, m') % x-axis label
-ylabel('Bending Moment, Nm') % y-axis label
+% fplot(M0,[0 lw]);
+% xlabel('Distance from root, m') % x-axis label
+% ylabel('Bending Moment, Nm') % y-axis label
 x = 0;
 MaxM0 = subs(M0);
 MaxM0 = double(MaxM0);
@@ -47,7 +50,7 @@ c = 4*(t^3)-(4*MaxM0/(pi*Uts));
 d = -(t^4);
 r = roots([a b c d]);
 ro_spar_cyl_m = r(real(r) & imag(r)==0);
-ro_spar_cyl_mm = ro_spar_cyl_m*1000;
+ro_spar_cyl_mm = ro_spar_cyl_m(1)*1000;
 
 %%Minimum Side Length of Hexagonal Tube
 a = s;

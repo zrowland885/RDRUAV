@@ -57,22 +57,21 @@ iVar = PrimaryDimensionChecking(iVar);
 OtherComponentsFf_kg = 0.2;
 MotorFf_kg = 0.5;
 AvionicsFf_kg = 0.5;
-% FuselageStructFf_kg = iVar('"fuselage_Length_mm"=')*0.002*0.2;
 FuselageStructFf_kg = 0;
 
 % Read the mass of the assembly
 SwMass = ReadSwMass(SwPart);
 % Payload mass
-PayloadMass_kg = iVar('"controlPayloadDensity_kgm-3"=')*(iVar('"fuselage_PayloadBay_Length_mm"=')*78.90*152.40)/1000000000;
+PlMass_kg = iVar('"controlPayloadDensity_kgm-3"=')*(iVar('"fuselage_PayloadBay_Length_mm"=')*78.90*152.40)/1000000000;
 
 McIter = iVar('"controlMonteCarloIterations"=');	% Number of iterations to run for passenger Monte Carlo
 PassengerMc = {McIter,1};   % Cell for MC data to reside in
 
 % Doubles for MLE
-PaxCoMD_x_mm = [];
-PaxCoMD_y_mm = [];
-PaxCoMD_z_mm = [];
-PaxMassD_kg  = [];
+PaxCoMD_x_mm = zeros(1,McIter);
+PaxCoMD_y_mm = zeros(1,McIter);
+PaxCoMD_z_mm = zeros(1,McIter);
+PaxMassD_kg  = zeros(1,McIter);
 
 % Run Monte Carlo
 fprintf('\nMonte Carlo iteration: ');
@@ -82,10 +81,10 @@ for i=1:McIter
     fprintf(repmat('\b',1,length(num2str(i)))); % Progress counter
 
     % Fill up the doubles
-    PaxCoMD_x_mm(end+1) = PassengerMc{i}(1);
-    PaxCoMD_y_mm(end+1) = 0;
-    PaxCoMD_z_mm(end+1) = PassengerMc{i}(2);
-    PaxMassD_kg(end+1)  = PassengerMc{i}(3);
+    PaxCoMD_x_mm(i) = PassengerMc{i}(1);
+    PaxCoMD_y_mm(i) = 53.5;
+    PaxCoMD_z_mm(i) = -PassengerMc{i}(2);
+    PaxMassD_kg(i)  = PassengerMc{i}(3);
 end
 
 % Generate mean and sigma values via MLE with normal distribution
@@ -93,6 +92,11 @@ PaxCoM_x_mm = mle(PaxCoMD_x_mm);
 PaxCoM_y_mm = mle(PaxCoMD_y_mm);
 PaxCoM_z_mm = mle(PaxCoMD_z_mm);
 PaxMass_kg =  mle(PaxMassD_kg);
+
+% Payload CoM and mass value
+PlCoM_x_mm = 0;
+PlCoM_y_mm = -(15+78.90/2);
+PlCoM_z_mm = -iVar('"fuselage_PayloadBay_Length_mm"=')/2;
 
 % Aircraft CoM and mass value
 AcCoM_x_mm = SwMass('CoM_x')*1000;
@@ -102,14 +106,15 @@ AcCoM_z_mm = SwMass('CoM_z')*1000;
 AcMass_kg = SwMass('mass')+OtherComponentsFf_kg+MotorFf_kg+AvionicsFf_kg+FuselageStructFf_kg; % With FF
 
 % Combine mean MC values for passengers with aircraft mass
-TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PayloadMass_kg;
-TotalCoM_x_mm = (PaxMass_kg(1)*PaxCoM_x_mm(1) + AcMass_kg*AcCoM_x_mm)/(PaxMass_kg(1) + AcMass_kg);
-TotalCoM_y_mm = (PaxMass_kg(1)*PaxCoM_y_mm(1) + AcMass_kg*AcCoM_y_mm)/(PaxMass_kg(1) + AcMass_kg);
-TotalCoM_z_mm = (PaxMass_kg(1)*PaxCoM_z_mm(1) + AcMass_kg*AcCoM_z_mm)/(PaxMass_kg(1) + AcMass_kg);
+TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PlMass_kg;
+TotalCoM_x_mm = (PaxMass_kg(1)*PaxCoM_x_mm(1) + AcMass_kg*AcCoM_x_mm + PlMass_kg*PlCoM_x_mm)/TotalMass_kg;
+TotalCoM_y_mm = (PaxMass_kg(1)*PaxCoM_y_mm(1) + AcMass_kg*AcCoM_y_mm + PlMass_kg*PlCoM_y_mm)/TotalMass_kg;
+TotalCoM_z_mm = (PaxMass_kg(1)*PaxCoM_z_mm(1) + AcMass_kg*AcCoM_z_mm + PlMass_kg*PlCoM_z_mm)/TotalMass_kg;
 
 % Declare mass properties
 fprintf('\nTotal aircraft mass: %f kg\n', AcMass_kg)
 fprintf('\nTotal passenger mass: %f kg\n', PaxMass_kg(1))
+fprintf('\nTotal payload mass: %f kg\n', PlMass_kg)
 fprintf('\nCoM position (x, y, z): %f mm, %f mm, %f mm\n',...
 	TotalCoM_x_mm, TotalCoM_y_mm, TotalCoM_z_mm)
 
@@ -145,22 +150,22 @@ LiftSf = 1.1;   % Safety factor for lift
 TotalLift_N = TotalMass_kg*9.81*LiftSf; % Lift requirement
 iVar('"wingRefArea_mm2"=') = (2*TotalLift_N)/(1.225*CL*iVar('"controlVelocity_ms-1"=')^2)*10^6; % Lifting area in mm2 (both wings0
 
-iVar = iVar(SecondaryDimensionSizing);
+iVar = SecondaryDimensionSizing(iVar);
 
 %% ----------------------------------------------------------------------%%
 %                          STRUCTURAL ANALYSIS                            %
 %------------------------------------------------------------------------%%
 
-WorstCase_pMass_kg = iVar('"controlNumPassengerRows"=')*4*0.06775536;
-LDist = TotalLift_N/(2*(iVar('"wingSpan_Length_mm"=')+iVar('"fuselageSemiMajorAxis_Dist_mm"='))); % Lift distribution
-E = 228*1000000000; % Youngs Modulus of carbon fibre spars
-wingSpanFromBoom = iVar('"wingSpan_Length_mm"=') + (iVar('"fuselageSemiMajorAxis_Dist_mm"=')-0.5*iVar('"boomSeparation_Dist_mm"='));
-
-% SparSizing(wingSpanFromBoom,iVar('"boomSeparation_Dist_mm"='),LDist,(aMass_kg+WorstCase_pMass_kg),E,iVar('"controlVelocity_ms-1"='));
-
+WorstCase_PaxMass_kg = iVar('"controlNumPassengerRows"=')*4*0.06775536;
+WorstCase_TotalMass_kg = AcMass_kg+WorstCase_PaxMass_kg+PlMass_kg;
+E = 600*(10^6); % Youngs Modulus of carbon fibre spars
+% wingSpanFromBoom_m = (iVar('"wingSpan_Length_mm"=') + (iVar('"fuselageSemiMajorAxis_Dist_mm"=')-0.5*iVar('"boomSeparation_Dist_mm"=')))/1000;
 Ws = 1.1; % Total wing mass in kg
+wingMainSpar_Thickness_mm = 2;
+SparFf = 2;
 
-iVar('"wingMainSpar_OuterDiameter_mm"=')= SparSizing(wingSpanFromBoom,(aMass_kg+WorstCase_pMass_kg),Ws,1,iVar('"wingRootChord_Length_mm"='),iVar('"wingTipChord_Length_mm"='),600*(10^6),0.002);
+iVar('"wingMainSpar_OuterDiameter_mm"=') = SparSizing(iVar('"wingSpan_Length_mm"=')/1000,WorstCase_TotalMass_kg,Ws,1,iVar('"wingRootChord_Length_mm"=')/1000,iVar('"wingTipChord_Length_mm"=')/1000,E,wingMainSpar_Thickness_mm/1000)*2*SparFf;
+iVar('"wingMainSpar_InnerDiameter_mm"=') = iVar('"wingMainSpar_OuterDiameter_mm"=')-wingMainSpar_Thickness_mm*2;
 
 fprintf('\nOuter diameter: %f mm',iVar('"wingMainSpar_OuterDiameter_mm"='));
 
@@ -179,7 +184,7 @@ RefreshSw(SwPart);    % Refresh the Solidworks assembly
 SwMass = ReadSwMass(SwPart);
 % Update mass to consider new wing span
 AcMass_kg = SwMass('mass')+OtherComponentsFf_kg+MotorFf_kg+AvionicsFf_kg+FuselageStructFf_kg; % With FF
-TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PayloadMass_kg;
+TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PlMass_kg;
 
 
 %% ----------------------------------------------------------------------%%
@@ -188,7 +193,7 @@ TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PayloadMass_kg;
 
 %% Calculate score
 
-[SCORE,RAC] = ScoreCalc(iVar,AcMass_kg,PayloadMass_kg);
+[SCORE,RAC] = ScoreCalc(iVar,AcMass_kg,PlMass_kg);
 
 %% Create export file
 
@@ -197,36 +202,41 @@ exportid = strcat('matlab/results/results_',num2str(id(1))); % Create results fi
 %% Prepare data for export
 
 ExportCell =...
-    {'AcMass_kg',               AcMass_kg           ;...
-    'PaxMass_kg',               PaxMass_kg(1)       ;...
-    'PaxMassSigma_kg',          PaxMass_kg(2)       ;...
-    'PayloadMass_kg'            PayloadMass_kg      ;...
-    'TotalMass_kg',             TotalMass_kg        ;...
+    {'AcMass_kg',               AcMass_kg               ;...
+    'PaxMass_kg',               PaxMass_kg(1)           ;...
+    'PaxMassSigma_kg',          PaxMass_kg(2)           ;...
+    'PlMass_kg'                 PlMass_kg               ;...
+    'TotalMass_kg',             TotalMass_kg            ;...
+    'WorstCase_TotalMass_kg'    WorstCase_TotalMass_kg  ;...
 
-    'AcCoM_x_mm',               AcCoM_x_mm          ;...
-    'AcCoM_y_mm',           	AcCoM_y_mm          ;...
-    'AcCoM_z_mm',               AcCoM_z_mm          ;...
+    'AcCoM_x_mm',               AcCoM_x_mm              ;...
+    'AcCoM_y_mm',           	AcCoM_y_mm              ;...
+    'AcCoM_z_mm',               AcCoM_z_mm              ;...
 
-    'PaxCoM_x_mm',              PaxCoM_x_mm(1)      ;...
-    'PaxCoM_xSigma_mm',         PaxCoM_x_mm(2)      ;...
-    'PaxCoM_y_mm',              PaxCoM_y_mm(1)      ;...
-    'PaxCoM_ySigma_mm',         PaxCoM_y_mm(2)      ;...
-    'PaxCoM_z_mm',              PaxCoM_z_mm(1)      ;...
-    'PaxCoM_zSigma_mm',         PaxCoM_z_mm(2)      ;...
+    'PaxCoM_x_mm',              PaxCoM_x_mm(1)          ;...
+    'PaxCoM_xSigma_mm',         PaxCoM_x_mm(2)          ;...
+    'PaxCoM_y_mm',              PaxCoM_y_mm(1)          ;...
+    'PaxCoM_ySigma_mm',         PaxCoM_y_mm(2)          ;...
+    'PaxCoM_z_mm',              PaxCoM_z_mm(1)          ;...
+    'PaxCoM_zSigma_mm',         PaxCoM_z_mm(2)          ;...
 
-    'TotalCoM_x_mm',            TotalCoM_x_mm       ;...
-    'TotalCoM_y_mm',            TotalCoM_y_mm       ;...
-    'TotalCoM_z_mm',            TotalCoM_z_mm       ;...
+    'PlCoM_x_mm'                PlCoM_x_mm              ;...
+    'PlCoM_y_mm'                PlCoM_y_mm              ;...
+    'PlCoM_z_mm'                PlCoM_z_mm              ;...
+    
+    'TotalCoM_x_mm',            TotalCoM_x_mm           ;...
+    'TotalCoM_y_mm',            TotalCoM_y_mm           ;...
+    'TotalCoM_z_mm',            TotalCoM_z_mm           ;...
 
-    'FuselageMaxCamber_Pc',     LgfGeom(1)          ;...
-    'FuselageMaxCamberPos_Pc',  LgfGeom(2)          ;...
-    'FuselageMaxThickness_Pc',  LgfGeom(3)          ;...
-    'FuselageMaxChordPos_Pc',   LgfGeom(4)          ;...
+    'FuselageMaxCamber_Pc',     LgfGeom(1)              ;...
+    'FuselageMaxCamberPos_Pc',  LgfGeom(2)              ;...
+    'FuselageMaxThickness_Pc',  LgfGeom(3)              ;...
+    'FuselageMaxChordPos_Pc',   LgfGeom(4)              ;...
 
-    'TotalWeight_N',            TotalMass_kg*9.81   ;...
-    'TotalLift_N',              TotalLift_N         ;...
+    'TotalWeight_N',            TotalMass_kg*9.81       ;...
+    'TotalLift_N',              TotalLift_N             ;...
 
-    'SCORE',                    SCORE               ;...
+    'SCORE',                    SCORE                   ;...
     'RAC',                      RAC
 };
 

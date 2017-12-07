@@ -1,4 +1,4 @@
-﻿"fuselageSemiMajorAxis_Dist_mm"=	240
+"fuselageSemiMajorAxis_Dist_mm"=	240
 "fuselageSemiMinorAxis_Dist_mm"=	110
 "fuselageRib_Thickness_mm"=	3
 "fuselageS1_Length_mm"=	31.055
@@ -31,9 +31,9 @@
 "Fuselage_Length@Boss-Extrude1@fuselagePlatePax_v1.1<1>.Part"=	"fuselageRib_Thickness_mm"
 "Fuselage_Length@Boss-Extrude1@fuselagePlateEnd_v1.1<1>.Part"=	"fuselageRib_Thickness_mm"
 "fuselageS3YUpper_Chamfer_mm"=	15
-"fuselageS3YLower_Chamfer_mm"=	15
-"fuselageS4YUpper_Chamfer_mm"=	60
-"fuselageS4YLower_Chamfer_mm"=	60
+"fuselageS3YLower_Chamfer_mm"=	0
+"fuselageS4YUpper_Chamfer_mm"=	115
+"fuselageS4YLower_Chamfer_mm"=	15
 "D1@Sketch15@fuselageBodyS4_v1.1<1>.Part"=	"fuselageS3YUpper_Chamfer_mm"
 "D1@Sketch14@fuselageBodyS3_v1.2<1>.Part"=	"fuselageS3YUpper_Chamfer_mm"
 "D2@Sketch15@fuselageBodyS4_v1.1<1>.Part"=	"fuselageS3YLower_Chamfer_mm"

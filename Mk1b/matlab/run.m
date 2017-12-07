@@ -1,6 +1,6 @@
 %% Boot
 % Write the path to the aircraft directory here
-userpath = 'C:\Users\Zach\Desktop\GDP\RDUAVGit\RDUAV\Mk1b2';
+userpath = 'C:/Users/Zach/Desktop/GDP/RDUAVGit/RDUAV/Mk1b/';
 addpath(genpath(userpath));
 
 %% Check user input
