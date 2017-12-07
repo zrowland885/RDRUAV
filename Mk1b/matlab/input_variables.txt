@@ -7,7 +7,7 @@
 "controlMonteCarloIterations"=	1000	% Approx. 1250 iter./sec.
 "controlNumPassengerRows"=	13
 "controlPayloadDensity_kgm-3"=	190	% Max 1730 kgm-3
-"controlVelocity_ms-1"=	13
+"controlVelocity_ms-1"=	20
 
 % Wing dimensions
 "wingTaper_Ratio"=	0.9

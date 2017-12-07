@@ -145,44 +145,22 @@ LiftSf = 1.1;   % Safety factor for lift
 TotalLift_N = TotalMass_kg*9.81*LiftSf; % Lift requirement
 iVar('"wingRefArea_mm2"=') = (2*TotalLift_N)/(1.225*CL*iVar('"controlVelocity_ms-1"=')^2)*10^6; % Lifting area in mm2 (both wings0
 
-% VVV TO BE TRANSFERED TO SECONDARY DIMENSION SIZING FUNCTION VVV
+iVar = iVar(SecondaryDimensionSizing);
 
-% Span of each wing
-iVar('"wingSpan_Length_mm"=') = iVar('"wingRefArea_mm2"=')/...
-    (iVar('"wingRootChord_Length_mm"=')*(1+iVar('"wingTaper_Ratio"=')));
-
-% Taper angle for driving Solidworks subassembly
-iVar('"wingTaper_Angle_deg"=') =...
-    (180/pi)*atan( ( iVar('"wingRootChord_Length_mm"=')/iVar('"wingSpan_Length_mm"=')*(1-iVar('"wingTaper_Ratio"=')) ));
-
-% iVar('"wingRefArea"=') = ( 2*(iVar('"wingTaper_Ratio"=')*iVar('"wingSpan_Length_mm"=') + 0.5*(1-iVar('"wingTaper_Ratio"='))*iVar('"wingSpan_Length_mm"=')) + 2*iVar('"fuselageSemiMajorAxis_Dist_mm"=') )*iVar('"wingRootChord_Length_mm"=');
-
-% Wing Aspect Ratio
-iVar('"wingAspectRatio"=') = (2*(iVar('"wingSpan_Length_mm"=')+iVar('"fuselageSemiMajorAxis_Dist_mm"=')))^2 / iVar('"wingRefArea_mm2"=');
-
-% Wing main spar length defined as total wingspan
-iVar('"wingMainSpar_Length_mm"=') =...
-    iVar('"wingSpan_Length_mm"=')*2 + 20.29 + iVar('"fuselageSemiMajorAxis_Dist_mm"=')*2 + iVar('"wingRib_Thickness_mm"=')*2;
-
-% Wing minor spar length is the same as the main spar length
-iVar('"wingMinorSpar_Length_mm"=') =...
-    iVar('"wingMainSpar_Length_mm"=');
-
-% Wing thickness for fuselage and clamp sizing
-iVar('"wingSlotThickness_mm"=') = iVar('"wingRootChord_Length_mm"=')*0.12;
-if iVar('"wingSlotThickness_mm"=') < 65
-    iVar('"wingSlotThickness_mm"=') = 65;
-end
 %% ----------------------------------------------------------------------%%
 %                          STRUCTURAL ANALYSIS                            %
 %------------------------------------------------------------------------%%
 
 WorstCase_pMass_kg = iVar('"controlNumPassengerRows"=')*4*0.06775536;
-k = TotalLift_N/(2*(iVar('"wingSpan_Length_mm"=')+iVar('"fuselageSemiMajorAxis_Dist_mm"='))); % Lift distribution
+LDist = TotalLift_N/(2*(iVar('"wingSpan_Length_mm"=')+iVar('"fuselageSemiMajorAxis_Dist_mm"='))); % Lift distribution
 E = 228*1000000000; % Youngs Modulus of carbon fibre spars
 wingSpanFromBoom = iVar('"wingSpan_Length_mm"=') + (iVar('"fuselageSemiMajorAxis_Dist_mm"=')-0.5*iVar('"boomSeparation_Dist_mm"='));
 
-% iVar('"wingMainSpar_OuterDiameter_mm"=')=SparSizing(wingSpanFromBoom,iVar('"boomSeparation_Dist_mm"='),k,(aMass_kg+WorstCase_pMass_kg),E,iVar('"controlVelocity_ms-1"='));
+% SparSizing(wingSpanFromBoom,iVar('"boomSeparation_Dist_mm"='),LDist,(aMass_kg+WorstCase_pMass_kg),E,iVar('"controlVelocity_ms-1"='));
+
+Ws = 1.1; % Total wing mass in kg
+
+iVar('"wingMainSpar_OuterDiameter_mm"=')= SparSizing(wingSpanFromBoom,(aMass_kg+WorstCase_pMass_kg),Ws,1,iVar('"wingRootChord_Length_mm"='),iVar('"wingTipChord_Length_mm"='),600*(10^6),0.002);
 
 fprintf('\nOuter diameter: %f mm',iVar('"wingMainSpar_OuterDiameter_mm"='));
 
