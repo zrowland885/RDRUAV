@@ -10,8 +10,8 @@
 "controlVelocity_ms-1"=	13
 
 % Wing dimensions
-"wingTaper_Ratio"=	0.9
-"wingAileronChord_Length_mm"=	30
+"wingTaper_Ratio"=	0.99
+"wingAileronChord_Length_mm"=	50
 "wingRootChord_Length_mm"=	400	% AWRA = 271 mm
 "wingRib_Thickness_mm"=	2
 
@@ -35,11 +35,14 @@
 "wingMainSpar_OuterDiameter_mm"=	18
 "boomInner_Diameter_mm"=	15
 "boomOuter_Diameter_mm"=	18
-"boomClearance_Dist_mm"=	100
+"boomClearance_Dist_mm"=	200
 "boomSeparation_Dist_mm"=	300
 
 % Tail dimensions
-"tail_Length_mm"=	300
+"tailChord_Length_mm"=	300
+"tailRudderChord_Length_mm"=	50
+"tailElevatorChord_Length_mm"=	50
+"tailRudder_Length_mm"=	100
 
 % Motor dimensions
 "motor_Length_mm"=	180

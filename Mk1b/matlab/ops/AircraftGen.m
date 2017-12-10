@@ -11,6 +11,7 @@ function [] = AircraftGen(iVar,id)
 %   v0.32:  ZR, LEH, HGo	22/11/17    Cleaned up code somewhat; added spar sizing
 %   v0.33:  ZR              25/11/17    Significant code cleanup; file organisation; Readme created with best practices; LgfAero added
 %   v0.34:  ZR              28/11/17    Cleanup of result output
+%   v0.4:   ZR, LEH         09/12/17    Added new spar sizing code, considerable assem updates, readme update, set up Git
 % 
 %   Debugging FAQ:
 %       Issues with importing dimensions:
@@ -54,7 +55,7 @@ iVar = PrimaryDimensionChecking(iVar);
 % in kg.
 
 % Mass fudge and safety factors
-OtherComponentsFf_kg = 0.2;
+OtherComponentsFf_kg = 0;
 MotorFf_kg = 0.5;
 AvionicsFf_kg = 0.5;
 FuselageStructFf_kg = 0;
@@ -162,9 +163,9 @@ E = 600*(10^6); % Youngs Modulus of carbon fibre spars
 % wingSpanFromBoom_m = (iVar('"wingSpan_Length_mm"=') + (iVar('"fuselageSemiMajorAxis_Dist_mm"=')-0.5*iVar('"boomSeparation_Dist_mm"=')))/1000;
 Ws = 1.1; % Total wing mass in kg
 wingMainSpar_Thickness_mm = 2;
-SparFf = 2;
+SparFf = 1.2;
 
-iVar('"wingMainSpar_OuterDiameter_mm"=') = SparSizing(iVar('"wingSpan_Length_mm"=')/1000,WorstCase_TotalMass_kg,Ws,1,iVar('"wingRootChord_Length_mm"=')/1000,iVar('"wingTipChord_Length_mm"=')/1000,E,wingMainSpar_Thickness_mm/1000)*2*SparFf;
+iVar('"wingMainSpar_OuterDiameter_mm"=') = SparSizing(iVar('"wingSpan_Length_mm"=')/1000,WorstCase_TotalMass_kg,Ws,6,iVar('"wingRootChord_Length_mm"=')/1000,iVar('"wingTipChord_Length_mm"=')/1000,E,wingMainSpar_Thickness_mm/1000)*2*SparFf;
 iVar('"wingMainSpar_InnerDiameter_mm"=') = iVar('"wingMainSpar_OuterDiameter_mm"=')-wingMainSpar_Thickness_mm*2;
 
 fprintf('\nOuter diameter: %f mm',iVar('"wingMainSpar_OuterDiameter_mm"='));
@@ -197,7 +198,7 @@ TotalMass_kg = AcMass_kg + PaxMass_kg(1) + PlMass_kg;
 
 %% Create export file
 
-exportid = strcat('matlab/results/results_',num2str(id(1))); % Create results file with ID code (still working on that)
+exportid = strcat('C:/Users/Zach/Desktop/GDP/RDUAVGit/RDUAV/Mk1b/matlab/results/results_',num2str(id(1))); % Create results file with ID
 
 %% Prepare data for export
 

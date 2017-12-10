@@ -45,7 +45,7 @@ iVar('"wingMinorSpar_Length_mm"=') =...
 
 % Boom length
 iVar('"boom_Length_mm"=') =...
-    iVar('"motor_Length_mm"=') + iVar('"fuselage_Length_mm"=') + iVar('"tail_Length_mm"=') + iVar('"boomClearance_Dist_mm"=');
+    iVar('"motor_Length_mm"=') + iVar('"fuselage_Length_mm"=') + iVar('"tailChord_Length_mm"=') + iVar('"boomClearance_Dist_mm"=');
 
 % Wing thickness for fuselage and clamp sizing
 iVar('"wingSlotThickness_mm"=') = iVar('"wingRootChord_Length_mm"=')*0.12;

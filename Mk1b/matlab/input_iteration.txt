@@ -4,6 +4,5 @@
 % changing any variables or dimensions.
 % "noChangeIter"=	0:0:0
 
-"controlNumPassengerRows"=	4:2:20
-"controlPayloadDensity_kgm-3"=	0:300:1500
-"wingRootChord_Length_mm"=	300:100:600
+
+"wingRootChord_Length_mm"=	300:50:600

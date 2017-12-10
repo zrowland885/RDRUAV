@@ -1,4 +1,4 @@
-for i=1:279
+for i=1:7
     filename = strcat('results_',num2str(i),'.txt');
     PlotData = ReadDimensions('matlab/results/',filename,'resultmap');
     
