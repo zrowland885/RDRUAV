@@ -1,12 +1,12 @@
-"wingMainSpar_Length_mm"=	2836.11677334357
-"wingMinorSpar_Length_mm"=	2836.11677334357
-"wingRootChord_Length_mm"=	400
+"wingMainSpar_Length_mm"=	1903.8847225903
+"wingMinorSpar_Length_mm"=	1903.8847225903
+"wingRootChord_Length_mm"=	500
 "D2@Boss-Extrude1@masterMainSpar_v1.1<1>.Part"=	"wingMainSpar_Length_mm" / 2
 "D1@Boss-Extrude1@masterMinorSpar_v1.1<1>.Part"=	"wingMinorSpar_Length_mm" / 2
 "D2@Boss-Extrude1@masterMinorSpar_v1.1<1>.Part"=	"wingMinorSpar_Length_mm" / 2
 "fuselage_Length_mm"=	919.55
-"wingMainSpar_InnerDiameter_mm"=	14.5507781938932
-"wingMainSpar_OuterDiameter_mm"=	18.5507781938932
+"wingMainSpar_InnerDiameter_mm"=	8.45340054258463
+"wingMainSpar_OuterDiameter_mm"=	12.4534005425846
 "D1@Sketch2@masterMainSpar_v1.1<1>.Part"=	"wingMainSpar_OuterDiameter_mm"
 "D2@Sketch2@masterMainSpar_v1.1<1>.Part"=	"wingMainSpar_InnerDiameter_mm"
 "boomInner_Diameter_mm"=	15

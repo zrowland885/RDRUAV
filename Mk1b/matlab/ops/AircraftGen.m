@@ -58,7 +58,7 @@ iVar = PrimaryDimensionChecking(iVar);
 OtherComponentsFf_kg = 0;
 MotorFf_kg = 0.5;
 AvionicsFf_kg = 0.5;
-FuselageStructFf_kg = 0;
+FuselageStructFf_kg = -1.8;
 
 % Read the mass of the assembly
 SwMass = ReadSwMass(SwPart);

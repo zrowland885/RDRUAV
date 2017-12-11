@@ -14,7 +14,7 @@ switch user_input
     case 1 % Input via UI (currently broken)
         iVar = Gui();
         AircraftGen(iVar,[0,0]);
-    case 2 % Input via textfile (no iteration)
+    case 2 % Input via 2textfile (no iteration)
         iVar = ReadDimensions('','input_variables.txt','map');
         AircraftGen(iVar,[0,0]);
     case 3 % Input via textfile (with iteration)

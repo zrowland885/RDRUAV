@@ -10,8 +10,8 @@ iVar('"fuselage_PassengerBay_Length_mm"=') =...
     iVar('"controlNumPassengerRows"=') * ( iVar('"fuselagePassengerSpacingLong_Length_mm"=') + iVar('"fuselageSeat_Diameter_mm"=') );
 
 % Set connector length to cover wing chord plus some room space
-iVar('"fuselageConnector_Length_mm"=') =...
-    iVar('"wingRootChord_Length_mm"=');
+iVar('"fuselageConnector_Length_mm"=') =160;
+%     iVar('"wingRootChord_Length_mm"=');
 
 % Divide up the remaining alotted fuselage length
 if iVar('"fuselage_PassengerBay_Length_mm"=') > iVar('"fuselageConnector_Length_mm"=')

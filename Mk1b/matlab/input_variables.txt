@@ -6,14 +6,15 @@
 % Control parameters
 "controlMonteCarloIterations"=	1000	% Approx. 1250 iter./sec.
 "controlNumPassengerRows"=	13
-"controlPayloadDensity_kgm-3"=	190	% Max 1730 kgm-3
+"controlPayloadDensity_kgm-3"=	115	% Max 1730 kgm-3
 "controlVelocity_ms-1"=	13
 
 % Wing dimensions
-"wingTaper_Ratio"=	0.99
-"wingAileronChord_Length_mm"=	50
-"wingRootChord_Length_mm"=	400	% AWRA = 271 mm
+"wingTaper_Ratio"=	0.95
+"wingAileronChord_Length_mm"=	80
+"wingRootChord_Length_mm"=	500	% AWRA = 271 mm
 "wingRib_Thickness_mm"=	2
+"wingTipTwist_Angle_deg"=	1
 
 % Fuselage dimensions
 "fuselageSemiMajorAxis_Dist_mm"=	240	% 220 mm
@@ -21,9 +22,9 @@
 "fuselagePassengerSpacingLong_Length_mm"=	6.35	% 6.35 mm by rules
 "fuselageSeat_Diameter_mm"=	49	% Largest passenger diameter = 49 mm
 "fuselageRib_Thickness_mm"=	3
-"fuselageS1_Ratio"=	0.1	% Fractions of passenger bay length minus connector length.
-"fuselageS2_Ratio"=	0.3	% These must sum to 1 or there won't be enough space for
-"fuselageS3_Ratio"=	0.6	% the passengers.
+"fuselageS1_Ratio"=	0.7	% Fractions of passenger bay length minus connector length.
+"fuselageS2_Ratio"=	0.1	% These must sum to 1 or there won't be enough space for
+"fuselageS3_Ratio"=	0.2	% the passengers.
 "fuselageS4_Length_mm"=	200
 "fuselageS3YUpper_Chamfer_mm"=	15	% Should be <= 15 mm to avoid intersecting passenger bay
 "fuselageS3YLower_Chamfer_mm"=	5	

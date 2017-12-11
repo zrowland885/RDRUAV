@@ -1,10 +1,10 @@
 "fuselageSemiMajorAxis_Dist_mm"=	240
 "fuselageSemiMinorAxis_Dist_mm"=	110
 "fuselageRib_Thickness_mm"=	3
-"fuselageS1_Length_mm"=	31.055
-"fuselageConnector_Length_mm"=	400
-"fuselageS2_Length_mm"=	93.165
-"fuselageS3_Length_mm"=	186.33
+"fuselageS1_Length_mm"=	385.385
+"fuselageConnector_Length_mm"=	160
+"fuselageS2_Length_mm"=	55.055
+"fuselageS3_Length_mm"=	110.11
 "fuselageS4_Length_mm"=	200
 "D2@Sketch1@fuselageBodyS1_v1.2<1>.Part"=	"fuselageSemiMajorAxis_Dist_mm"
 "D2@Sketch1@fuselageBodyConnector_v1.1<1>.Part"=	"fuselageSemiMajorAxis_Dist_mm"
