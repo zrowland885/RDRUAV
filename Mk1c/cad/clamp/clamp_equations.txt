@@ -1,0 +1,3 @@
+"wingMainSpar_OuterDiameter_mm"=	13.3443903321555
+"Major_Spar_Diameter@Sketch6@clampBottom_v1.1<1>.Part"=	"wingMainSpar_OuterDiameter_mm"
+"Major_Spar_Diameter@Sketch6@clampTop_v1.1<2>.Part"=	"wingMainSpar_OuterDiameter_mm"
