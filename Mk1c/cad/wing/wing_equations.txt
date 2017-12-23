@@ -1,5 +1,5 @@
-"wingSpan_Length_mm"=	877.49487467795
-"wingTaper_Angle_deg"=	1.30566828080631
+"wingSpan_Length_mm"=	973.383887758568
+"wingTaper_Angle_deg"=	0.235448553112819
 "wingAileronChord_Length_mm"=	80
 "wingRootChord_Length_mm"=	400
 "wingRib_Thickness_mm"=	2
@@ -14,8 +14,8 @@
 "D1@airfoil@wingAirfoilRib_v1.1<2>.Part"=	"wingRootChord_Length_mm"
 "D1@airfoil_rib@wingAirfoilRib_v1.1<2>.Part"=	"wingRib_Thickness_mm"
 "D1@airfoil_rib@wingAirfoilRibTip_v1.1<1>.Part"=	"wingRib_Thickness_mm"
-"wingTipChord_Length_mm"=	380
-"wingMainSpar_OuterDiameter_mm"=	13.3443903321555
+"wingTipChord_Length_mm"=	396
+"wingMainSpar_OuterDiameter_mm"=	13.6727108354301
 "D2@spar_cuts@wingAirfoilRib_v1.1<2>.Part"=	"wingMainSpar_OuterDiameter_mm"
 "D2@spar_holes@wingBodyNaca1412Twist_v1.2<1>.Part"=	"wingMainSpar_OuterDiameter_mm"
 "D2@spar_cuts@wingAirfoilRibTip_v1.1<1>.Part"=	"wingMainSpar_OuterDiameter_mm"

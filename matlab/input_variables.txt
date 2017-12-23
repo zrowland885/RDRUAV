@@ -4,20 +4,20 @@
 % Always delimit with a Tab after the equals sign.
 
 % Control parameters
-"controlMonteCarloIterations"=	1000	% Approx. 1250 iter./sec.
-"controlNumPassengerRows"=	8
+"controlMonteCarloIterations"=	10000	% Approx. 1250 iter./sec.
+"controlNumPassengerRows"=	13
 "controlPayloadDensity_kgm-3"=	0	% Max 1730 kgm-3
 "controlVelocity_ms-1"=	13
 
 % Wing dimensions
-"wingTaper_Ratio"=	0.95
+"wingTaper_Ratio"=	0.99
 "wingAileronChord_Length_mm"=	80
 "wingRootChord_Length_mm"=	400	% AWRA = 271 mm
 "wingRib_Thickness_mm"=	2
 "wingTipTwist_Angle_deg"=	1
 
 % Fuselage dimensions
-"fuselageSemiMajorAxis_Dist_mm"=	240	% 220 mm
+"fuselageSemiMajorAxis_Dist_mm"=	244	% 220 mm
 "fuselageSemiMinorAxis_Dist_mm"=	110	% 110 mm
 "fuselagePassengerSpacingLong_Length_mm"=	6.35	% 6.35 mm by rules
 "fuselageSeat_Diameter_mm"=	49	% Largest passenger diameter = 49 mm
@@ -37,7 +37,7 @@
 "boomInner_Diameter_mm"=	15
 "boomOuter_Diameter_mm"=	18
 "boomClearance_Dist_mm"=	400
-"boomSeparation_Dist_mm"=	300
+"boomSeparation_Dist_mm"=	400
 
 % Tail dimensions
 "tailChord_Length_mm"=	300

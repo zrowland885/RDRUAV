@@ -54,8 +54,8 @@ FuselageStructFf_kg = 0;
 % Read the mass of the assembly
 SwMass = ReadSwMass(SwPart);
 % Payload mass
-PlMass_kg = iVar('"controlPayloadDensity_kgm-3"=')*(iVar('"fuselage_PayloadBay_Length_mm"=')*78.90*152.40)/1000000000;
-
+% PlMass_kg = iVar('"controlPayloadDensity_kgm-3"=')*(iVar('"fuselage_PayloadBay_Length_mm"=')*78.90*152.40)/1000000000;
+PlMass_kg = 0; % Use if taking SW parts as payload masses
 
 McIter = iVar('"controlMonteCarloIterations"=');	% Number of iterations to run for passenger Monte Carlo
 PassengerMc = {McIter,1};   % Cell for MC data to reside in
@@ -154,11 +154,13 @@ WorstCase_TotalMass_kg = AcMass_kg+WorstCase_PaxMass_kg+PlMass_kg;
 E = 600*(10^6); % Youngs Modulus of carbon fibre spars
 % wingSpanFromBoom_m = (iVar('"wingSpan_Length_mm"=') + (iVar('"fuselageSemiMajorAxis_Dist_mm"=')-0.5*iVar('"boomSeparation_Dist_mm"=')))/1000;
 Ws = 1.1; % Total wing mass in kg
-wingMainSpar_Thickness_mm = 2;
-SparFf = 1.2;
+wingSpar_Thickness_mm = 2;
+SparFf = 1.5;
 
-iVar('"wingMainSpar_OuterDiameter_mm"=') = SparSizing(iVar('"wingSpan_Length_mm"=')/1000,WorstCase_TotalMass_kg,Ws,6,iVar('"wingRootChord_Length_mm"=')/1000,iVar('"wingTipChord_Length_mm"=')/1000,E,wingMainSpar_Thickness_mm/1000)*2*SparFf;
-iVar('"wingMainSpar_InnerDiameter_mm"=') = iVar('"wingMainSpar_OuterDiameter_mm"=')-wingMainSpar_Thickness_mm*2;
+iVar('"wingMainSpar_OuterDiameter_mm"=') = SparSizing(iVar('"wingSpan_Length_mm"=')/1000,WorstCase_TotalMass_kg,Ws,3,iVar('"wingRootChord_Length_mm"=')/1000,iVar('"wingTipChord_Length_mm"=')/1000,E,wingSpar_Thickness_mm/1000)*2*SparFf;
+iVar('"wingMainSpar_InnerDiameter_mm"=') = iVar('"wingMainSpar_OuterDiameter_mm"=')-wingSpar_Thickness_mm*2;
+iVar('"boomOuter_Diameter_mm"=') = iVar('"wingMainSpar_OuterDiameter_mm"=');
+iVar('"boomInner_Diameter_mm"=') = iVar('"boomOuter_Diameter_mm"=') - 2*wingSpar_Thickness_mm;
 
 fprintf('\nOuter diameter: %f mm',iVar('"wingMainSpar_OuterDiameter_mm"='));
 

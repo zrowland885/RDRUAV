@@ -1,6 +1,6 @@
-"boomSeparation_Dist_mm"=	300
+"boomSeparation_Dist_mm"=	400
 "tailChord_Length_mm"=	300
-"boomOuter_Diameter_mm"=	18
+"boomOuter_Diameter_mm"=	13.6727108354301
 "tailRudderChord_Length_mm"=	50
 "tailElevatorChord_Length_mm"=	50
 "tailRudder_Length_mm"=	100

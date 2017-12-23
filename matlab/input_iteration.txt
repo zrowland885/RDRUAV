@@ -5,5 +5,7 @@
 % "noChangeIter"=	0:0:0
 
 
-"controlNumPassengerRows"=	13
-"wingRootChord_Length_mm"=	300:50:600
+"controlNumPassengerRows"=	7:3:16
+"controlPayloadDensity_kgm-3"=	0:100:300
+"controlVelocity_ms-1"=	12:1:14
+"wingRootChord_Length_mm"=	300:100:600
